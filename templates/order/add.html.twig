@@ -7,23 +7,48 @@
     <p>Vérifiez vos information avant le paiement</p>
     <hr>
     <div class="row mt-3" >
+        <div class="col-md-6">
+            <div class="form-check mt-3">
+            <strong>Mon adresse de livraison</strong><br>
+                {{delivery|raw}}
+            </div>
+            <hr>  
+            <div class="form-check mt-3">
+            <strong>Mon transporteur</strong><br>
+                {{carrier.name}} <br>
+                {{carrier.description}} <br>
+                {{carrier.price | number_format(2, ',', '.')}} <br>
+            </div>
+        </div>
         <div class="col-md-6" >
-            <h3 class="text-center">Recap de ma commande</h3>
+            <h3 class="text-center">Ma commande</h3>
             <div class="order-summary">
-                {% for product in cart %}
-                <div class="row">
-                    <div class="col-md-2">
-                        <img src="/assets/illustration/{{product.product.illustration}}" alt="{{product.product.name}}" height="75px">
+                {% set total = null %}
+                {% for key,product in cart %}
+                    {% set total = total + (product.product.price * product.quantity) %}
+                    <div class="row {% if key > 0 %}mt-2{% endif %}">
+                        <div class="col-md-2">
+                            <img src="/assets/illustration/{{product.product.illustration}}" alt="{{product.product.name}}" height="75px">
+                        </div>
+                        <div class="col-md-8 my-auto">
+                            {{product.product.name}}<br>
+                            <small>
+                                {{product.product.subtitle}} <br>
+                                x {{product.quantity}}
+                            </small>
+                        </div>
+                        <div class="col-md-2 my-auto">
+                            {{((product.product.price * product.quantity) /100) | number_format(2, ',', '.') }} £
+                        </div>
                     </div>
-                    <div class="col-md-8 my-auto">
-                        {{product.product.name}}<br>
-                        <small>{{product.product.subtitle}}</small>
-                    </div>
-                    <div class="col-md-2 my-auto">
-                        x {{product.quantity}}
-                    </div>
-                </div>
                 {% endfor %}
+                {% set sousTotal = (total /100) %}
+                <hr>
+                <strong>Sous-Total: </strong> {{ sousTotal |number_format(2, ',', '.') }} £ <br>
+                <strong>Livraison: </strong> {{ (carrier.price)|number_format(2, ',', '.')}} £ <br>
+                <hr>
+                <strong>Total: </strong> {{ (sousTotal + carrier.price)|number_format(2, ',', '.') }} £ <br>
+                <a href="" class="btn btn-success btn-block mt-3">Payer | {{ (sousTotal + carrier.price)|number_format(2, ',', '.') }} £</a>
             </div>
         </div>
     </div>

@@ -38,7 +38,7 @@ class OrderController extends AbstractController
         ]);
     }
     //
-    #[Route('/commande/recapitulatif', name: 'app_order_recap')]
+    #[Route('/commande/recapitulatif', name: 'app_order_recap', methods:"POST")]
     public function add(Cart $cart, Request $request): Response
     {
         $form = $this->createForm(OrderType::class, null, [
@@ -82,9 +82,14 @@ class OrderController extends AbstractController
             }
 
             $this->manager->flush();
+            return $this->render('order/add.html.twig', [
+                'cart' => $cart->getFull(),
+                'carrier' => $carriers,
+                'delivery' => $deliver_content
+            ]);
         }
-        return $this->render('order/add.html.twig', [
-            'cart' => $cart->getFull()
-        ]);
+
+        return $this->redirectToRoute('app_cart');
+        
     }
 }

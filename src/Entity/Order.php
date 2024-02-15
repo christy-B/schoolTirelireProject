@@ -44,11 +44,20 @@ class Order
         $this->orderDetails = new ArrayCollection();
     }
 
+    //pas persister perso
+    public function getTotal()
+    {
+        $total = null;
+        foreach ($this->getOrderDetails()->getValues() as $product) {
+            $total = $total + ($product->getPrice() * $product->getQuantity());
+        }
+        return $total;
+    }
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    
     public function getUser(): ?User
     {
         return $this->user;
