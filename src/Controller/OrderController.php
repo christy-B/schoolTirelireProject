@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+
 class OrderController extends AbstractController
 {
     protected $manager;
@@ -80,12 +81,16 @@ class OrderController extends AbstractController
                 $orderDetail->setTotal($product['product']->getPrice() * $product['quantity']);
                 $this->manager->persist($orderDetail);
             }
+            
+            //$this->manager->flush();
 
-            $this->manager->flush();
+            
+
             return $this->render('order/add.html.twig', [
                 'cart' => $cart->getFull(),
                 'carrier' => $carriers,
-                'delivery' => $deliver_content
+                'delivery' => $deliver_content,
+                'stripe_key' => $_ENV["STRIPE_KEY"],
             ]);
         }
 
