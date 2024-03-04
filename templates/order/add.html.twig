@@ -49,10 +49,10 @@
                 {% set sousTotal = (total /100) %}
                 <hr>
                 <strong>Sous-Total: </strong> {{ sousTotal |number_format(2, ',', '.') }} £ <br>
-                <strong>Livraison: </strong> {{ (carrier.price)|number_format(2, ',', '.')}} £ <br>
+                <strong>Livraison: </strong> {{ (carrier.price / 100)|number_format(2, ',', '.')}} £ <br>
                 <hr>
-                <strong>Total: </strong> {{ (sousTotal + carrier.price)|number_format(2, ',', '.') }} £ <br>
-                <a id="checkout-button" class="btn btn-success btn-block mt-3">Payer | {{ (sousTotal + carrier.price)|number_format(2, ',', '.') }} £</a>
+                <strong>Total: </strong> {{ (sousTotal + (carrier.price / 100))|number_format(2, ',', '.') }} £ <br>
+                <a id="checkout-button" class="btn btn-success btn-block mt-3">Payer | {{ (sousTotal + (carrier.price /100))|number_format(2, ',', '.') }} £</a>
             </div>
         </div>
     </div>
@@ -62,15 +62,22 @@
     <script type="text/javascript">
         var stripe = Stripe("{{stripe_key}}");
         var checkoutButton = document.getElementById("checkout-button");
+        var reference = "{{ reference }}";
+        var url = "/commande/create/session/{{reference}}";
         checkoutButton.addEventListener("click", function () {
-            fetch("{{ path('app_stripe_create_session') }}", {
+            fetch(url, {
                 method: "POST",
             })
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (session) {
-                    return stripe.redirectToCheckout({ sessionId: session.id });
+                    if(session.error=='order'){
+                        windows.location.replace('{{path('app_order')}}')
+                    } else {
+                        return stripe.redirectToCheckout({ sessionId: session.id });
+                    }
+                    
                 })
                 .then(function (result) {
                     // If redirectToCheckout fails due to a browser or network
