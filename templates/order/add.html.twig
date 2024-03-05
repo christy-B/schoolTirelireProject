@@ -21,7 +21,7 @@
             <strong>Mon transporteur</strong><br>
                 {{carrier.name}} <br>
                 {{carrier.description}} <br>
-                {{carrier.price | number_format(2, ',', '.')}} <br>
+                {{(carrier.price / 100) | number_format(2, ',', '.')}}<br>
             </div>
         </div>
         <div class="col-md-6" >

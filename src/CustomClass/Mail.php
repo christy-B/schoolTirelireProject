@@ -2,21 +2,25 @@
 
 namespace App\CustomClass;
 
-use Doctrine\ORM\Query\Expr\From;
 use Mailjet\Client;
 use Mailjet\Resources;
-use Symfony\Bridge\Twig\Mime\NotificationEmail;
-use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Mail
 {
-  private $api_key = '8c84465c9abc886f3931df53f29f4c42';
-  private $api_key_secret = '4d83ba8c01bd6a8c05d65e19e009d471';
+  private $parameter; 
+
+  public function __construct(ParameterBagInterface $parameter) 
+  { 
+    $this->parameter = $parameter; 
+  }
 
   public function send($to_email, $to_name, $subject, $content)
   {
+    $api_key = $this->parameter->get('api_key');
+    $api_key_secret = $this->parameter->get('api_secret'); 
 
-    $mj = new Client($this->api_key, $this->api_key_secret, true, ['version' => 'v3.1']);
+    $mj = new Client($api_key, $api_key_secret, true, ['version' => 'v3.1']);
     $body = [
       'Messages' => [
         [

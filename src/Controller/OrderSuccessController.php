@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\CustomClass\Cart;
 use App\CustomClass\Mail;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +13,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class OrderSuccessController extends AbstractController
 {
+    private $parameter;
+    public function __construct(ParameterBagInterface $parameter)
+    {
+        $this->parameter = $parameter;
+    }
+
     #[Route('/commande/success/{stripeSessionId}', name: 'app_order_validate')]
     public function index(EntityManagerInterface $manager, Cart $cart, $stripeSessionId): Response
     {
@@ -26,12 +33,12 @@ class OrderSuccessController extends AbstractController
         }
 
         //send email
-        $mail = new Mail;
-        $content = "Bonjour". $order->getUser()->getFirstname()."<br/><br/>
+        $mail = new Mail($this->parameter);
+        $content = "Bonjour" . $order->getUser()->getFirstname() . "<br/><br/>
         merci pour votre commande<br/>
-        Votre commande n° ". $order->getReference(). " est bien validée";
+        Votre commande n° " . $order->getReference() . " est bien validée";
         $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'Bienvenu', $content);
-        
+
         //vider le panier
         $cart->remove();
         return $this->render('order_success/index.html.twig', [
