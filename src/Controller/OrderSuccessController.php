@@ -27,8 +27,8 @@ class OrderSuccessController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        if (!$order->getIsPaid()) {
-            $order->setIsPaid(1);
+        if ($order->getState() == 0) {
+            $order->setState(1);
             $manager->flush();
         }
 
