@@ -34,10 +34,10 @@ class OrderSuccessController extends AbstractController
 
         //send email
         $mail = new Mail($this->parameter);
-        $content = "Bonjour" . $order->getUser()->getFirstname() . "<br/><br/>
+        $content = "Bonjour " . $order->getUser()->getFirstname() . "<br/><br/>
         merci pour votre commande<br/>
         Votre commande n° " . $order->getReference() . " est bien validée";
-        $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'Bienvenu', $content);
+        $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'commande chez la Boutique Tirelire', $content);
 
         //vider le panier
         $cart->remove();

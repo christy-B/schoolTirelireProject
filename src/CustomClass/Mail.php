@@ -26,7 +26,7 @@ class Mail
         [
           'From' => [
             'Email' => "bienechristy1994@gmail.com",
-            'Name' => "christ"
+            'Name' => "La Boutique Tirelire"
           ],
           'To' => [
             [

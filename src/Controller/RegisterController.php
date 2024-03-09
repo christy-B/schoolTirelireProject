@@ -35,7 +35,7 @@ class RegisterController extends AbstractController
             $search_email = $manager->getRepository(User::class)->findOneByEmail($user->getEmail());
 
             if (!$search_email) {
-               
+
                 $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
                 $user->setRoles(['ROLE_USER']);
                 $manager->persist($user);
@@ -43,15 +43,14 @@ class RegisterController extends AbstractController
 
                 //
                 $mail = new Mail($this->parameter);
-                $content = "Bonjour". $user->getFirstname()."<br>
-Bienvenu dans votre boutique, nous somme ravi de vous compter parmi nous!";
-                $mail->send($user->getEmail(), $user->getFirstname(), 'Bienvenu', $content);
+                $content = "Bonjour " . $user->getFirstname() . "<br>
+                Bienvenu dans votre boutique, nous somme ravi de vous compter parmi nous!";
+                $mail->send($user->getEmail(), $user->getFirstname(), 'Incription', $content);
                 $notification = "vous etes bien inscrit";
                 return $this->redirectToRoute('app_login');
             } else {
                 $notification = "un compte est déja enregistrer avec cet email";
             }
-            
         }
 
         return $this->render('register/index.html.twig', [
