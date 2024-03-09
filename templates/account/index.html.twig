@@ -3,10 +3,18 @@
 {% block title %}Mon compte{% endblock %}
 
 {% block content %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="/admin" class="btn btn-success btn-backoffice">BackOffice</a>
+    {% endif %}
     <h1>Mon compte</h1>
     <p>Bienvenu <strong>{{ app.user.firstname }} {{ app.user.lastname }}</strong></p>
     <hr>
-    - <a href="{{ path('app_account_password') }}">Modifier mon mot de passe</a><br>
-    - <a href="{{path('app_account_address')}}">Gerer mes adresses</a><br>
-    - <a href="{{path('app_account_order')}}">Mes commandes</a><br>
+    <div class="d-flex justify-content-around">
+
+        <a class="d-flex justify-content-center align-items-center" href="{{ path('app_account_password') }}"  style="width: 300px; height:100px; text-decoration:none; background-color:#B6E1E7;">Modifier mon mot de passe</a>
+
+        <a class="justify-content-center d-flex align-items-center" href="{{path('app_account_address')}}" style="width: 300px; height:100px; text-decoration:none; background-color:#B6E1E7">Gerer mes adresses</a>
+        
+        <a class="justify-content-center d-flex align-items-center" href="{{path('app_account_order')}}" style="width: 300px; height:100px; text-decoration:none; background-color:#B6E1E7">Mes commandes</a>
+    </div>
 {% endblock %}

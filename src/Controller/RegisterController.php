@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -14,6 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
+    private $parameter;
+    public function __construct(ParameterBagInterface $parameter)
+    {
+        $this->parameter = $parameter;
+    }
 
     #[Route('/inscription', name: 'app_register')]
     public function index(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher): Response
@@ -36,11 +42,12 @@ class RegisterController extends AbstractController
                 $manager->flush();
 
                 //
-                $mail = new Mail;
+                $mail = new Mail($this->parameter);
                 $content = "Bonjour". $user->getFirstname()."<br>
 Bienvenu dans votre boutique, nous somme ravi de vous compter parmi nous!";
                 $mail->send($user->getEmail(), $user->getFirstname(), 'Bienvenu', $content);
                 $notification = "vous etes bien inscrit";
+                return $this->redirectToRoute('app_login');
             } else {
                 $notification = "un compte est déja enregistrer avec cet email";
             }

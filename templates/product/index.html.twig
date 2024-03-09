@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nos produits - La Boutique E-commerce!{% endblock %}
+{% block title %}Nos produits - La Boutique Tirelire!{% endblock %}
 
 {% block content %}
     <h1>Nos produits</h1>
         <div class="row product-container">
             {% for product in products %}
-                <div class="col-md-4">
+                <div class="mt-5 col-md-4">
                     {% include 'product/single_product.html.twig' %}
                 </div>
             {% endfor %}
