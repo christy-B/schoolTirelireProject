@@ -6,6 +6,8 @@ use App\CustomClass\Cart;
 use App\CustomClass\Mail;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Entity\Order;
+use App\Entity\OrderDetails;
+use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,16 +29,22 @@ class OrderSuccessController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
+        $character = "";
         if ($order->getState() == 0) {
             $order->setState(1);
+            foreach ($order->getOrderDetails()->getValues() as $product) {
+                $product->setActivateCode(uniqid());
+                $character = $character . $product->getProduct() . ": " . $product->getActivateCode() . "<br/>";
+            }
             $manager->flush();
         }
 
-        //send email
+        //send email and activate code 
         $mail = new Mail($this->parameter);
         $content = "Bonjour " . $order->getUser()->getFirstname() . "<br/><br/>
         merci pour votre commande<br/>
-        Votre commande n° " . $order->getReference() . " est bien validée";
+        Votre commande n° " . $order->getReference() . " est bien validée." . "<br/><br/>
+        Code(s) d'activation: <br/>" . $character;
         $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'commande chez la Boutique Tirelire', $content);
 
         //vider le panier
