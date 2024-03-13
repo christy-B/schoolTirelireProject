@@ -4,12 +4,13 @@
 
 {% block content %}
     <h1>Nos produits</h1>
-        <div class="row product-container">
-            {% for product in products %}
-                <div class="mt-5 col-md-4">
-                    {% include 'product/single_product.html.twig' %}
-                </div>
-            {% endfor %}
-        </div>
+    <p>Explorez notre collection dès aujourd'hui et laissez-vous inspirer par nos produits uniques et originaux.</p>
+    <div class="row product-container">
+        {% for product in products %}
+            <div class="mt-5 col-md-4">
+                {% include 'product/single_product.html.twig' %}
+            </div>
+        {% endfor %}
+    </div>
     
 {% endblock %}

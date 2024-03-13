@@ -81,6 +81,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
+                    <a class="nav-link" href="{{path('app_product')}}">Nos produits <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="{{path('app_product')}}"><span class="sr-only">(current)</span></a>
                 </li>
             </ul>
@@ -108,33 +111,31 @@
             <li data-target="#myCarousel" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+            <div class="carousel-item active" style="background:url('/assets/img/carrousel1.jpg'); background-size:cover; background-position:center">
                 <div class="container">
                     <div class="carousel-caption text-left">
-                        <h1>Example headline.</h1>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                        <h1>Bienvenue sur la Boutique Tirelire.</h1>
+                        <p>Découvrez une manière ludique et innovante de renforcer la cohésion d'équipe dans votre entreprise avec nos "nourrains" connectés. Transformez les petites tensions du quotidien en moments de convivialité et de partage!</p>
+                        <p><a class="btn btn-lg btn-primary" href="{{path('app_register')}}" role="button">Inscrivez-vous</a></p>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+            <div class="carousel-item" style="background:url('/assets/img/carrousel2.jpg'); background-size:cover; background-position:center">
                 <div class="container">
                     <div class="carousel-caption">
-                        <h1>Another example headline.</h1>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                        <h1>Cochons Connectés.</h1>
+                        <p>Ajoutez une touche d'originalité à votre espace de travail avec nos adorables cochons connectés. Ces objets connectés jouent le rôle de tirelire et enregistrent chaque "moins agréable" exprimé par votre équipe..</p>
+                        <p><a class="btn btn-lg btn-primary" href="{{path('app_product')}}" role="button">Achétez</a></p>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+            <div class="carousel-item" style="background:url('/assets/img/carrousel3.jpg'); background-size:cover; background-position:center">
                 <div class="container">
                     <div class="carousel-caption text-right">
-                        <h1>One more for good measure.</h1>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+                        <h1>Dock connecté.</h1>
+                        <p>Nous sommes ravis d'annoncer que vos services peuvent etre proposés et vous serez payer via nos docks connectés, conçus pour être compatibles avec tous nos modèles de tirelire connectée. Grâce à cette intégration innovante, vous pouvez vendre vos produits en toute simplicité.
+</p>
+                        <p><a class="btn btn-lg btn-primary" href="{{path('app_product')}}" role="button">Achétez</a></p>
                     </div>
                 </div>
             </div>

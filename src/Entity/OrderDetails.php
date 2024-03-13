@@ -29,12 +29,6 @@ class OrderDetails
     #[ORM\Column]
     private ?float $total = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $activateCode = null;
-
-    #[ORM\Column]
-    private ?bool $state = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -103,29 +97,5 @@ class OrderDetails
     public function __toString()
     {
         return $this->getProduct().' x'.$this->getQuantity();
-    }
-
-    public function getActivateCode(): ?string
-    {
-        return $this->activateCode;
-    }
-
-    public function setActivateCode(?string $activateCode): static
-    {
-        $this->activateCode = $activateCode;
-
-        return $this;
-    }
-
-    public function isState(): ?bool
-    {
-        return $this->state;
-    }
-
-    public function setState(bool $state): static
-    {
-        $this->state = $state;
-
-        return $this;
     }
 }

@@ -39,7 +39,7 @@ class OrderController extends AbstractController
         ]);
     }
     //
-    #[Route('/commande/recapitulatif', name: 'app_order_recap', methods:"POST")]
+    #[Route('/commande/recapitulatif', name: 'app_order_recap', methods: "POST")]
     public function add(Cart $cart, Request $request): Response
     {
         $form = $this->createForm(OrderType::class, null, [
@@ -62,7 +62,7 @@ class OrderController extends AbstractController
 
             //enregistrer ma commande order
             $order = new Order();
-            $reference = $date->format('daY').'-'.uniqid();
+            $reference = $date->format('daY') . '-' . uniqid();
             $order->setReference($reference);
             $order->setCreatedAt($date);
             $order->setUser($this->getUser());
@@ -81,22 +81,21 @@ class OrderController extends AbstractController
                 $orderDetail->setQuantity($product['quantity']);
                 $orderDetail->setPrice($product['product']->getPrice());
                 $orderDetail->setTotal($product['product']->getPrice() * $product['quantity']);
-                $orderDetail->setState(0);
+
                 $this->manager->persist($orderDetail);
             }
-            
+
             $this->manager->flush();
 
             return $this->render('order/add.html.twig', [
                 'cart' => $cart->getFull(),
                 'carrier' => $carriers,
                 'delivery' => $deliver_content,
-                'reference' =>$order->getReference(),
+                'reference' => $order->getReference(),
                 'stripe_key' => $_ENV["STRIPE_KEY"],
             ]);
         }
 
         return $this->redirectToRoute('app_cart');
-        
     }
 }
